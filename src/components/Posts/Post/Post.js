@@ -8,12 +8,12 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 
-import { likePost, deletePost } from '../../../actions/posts';
+import { likePost, deletePost, getPost } from '../../../actions/posts';
 import useStyles from './styles';
 
 const Post = ({ post, setCurrentId }) => {
   const user = JSON.parse(localStorage.getItem('profile'));
-  const [likes, setLikes] = useState(post?.likes);
+  const [likes, setLikes] = useState(post.likes);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -26,14 +26,14 @@ const Post = ({ post, setCurrentId }) => {
 
     if (hasLikedPost) {
       setLikes(post.likes.filter((id) => id !== userId));
-    } else {
+    } else if(post.likes) {
       setLikes([...post.likes, userId]);
     }
   };
 
   const Likes = () => {
-    if (likes.length > 0) {
-      return likes.find((like) => like === userId)
+    if ( post.likes && likes.length) {
+      return likes?.find((like) => like === userId)
         ? (
           <><ThumbUpAltIcon fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}` }</>
         ) : (
@@ -45,7 +45,8 @@ const Post = ({ post, setCurrentId }) => {
   };
 
   const openPost = (e) => {
-    // dispatch(getPost(post._id, history));
+     dispatch(getPost(post._id, history));
+     //console.log(post)
 
     history.push(`/posts/${post._id}`);
   };

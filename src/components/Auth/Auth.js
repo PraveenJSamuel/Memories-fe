@@ -4,13 +4,12 @@ import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Icon from './Icon';
+
+import Icon from './icon';
 import { signin, signup } from '../../actions/auth';
 import { AUTH } from '../../constants/actionTypes';
 import useStyles from './styles';
 import Input from './Input';
-
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
@@ -53,7 +52,7 @@ const SignUp = () => {
     }
   };
 
-  const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+  const googleError = (res) => console.log(` Google SignIn Error:\n ${res.details}`);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -80,7 +79,7 @@ const SignUp = () => {
             { isSignup ? 'Sign Up' : 'Sign In' }
           </Button>
           <GoogleLogin
-            clientId={GOOGLE_CLIENT_ID}
+            clientId="729757499674-uq78a1d00783igmu8tu8f0lsi8sa8ain.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
                 Google Sign In
