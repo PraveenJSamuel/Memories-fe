@@ -71,7 +71,7 @@ const Post = ({ post, setCurrentId }) => {
               e.stopPropagation();
               setCurrentId(post._id);
             }}
-            style={{ color: 'white' }}
+            style={{ color: 'white', marginLeft: '10px' }}
             size="small"
           >
             <MoreHorizIcon fontSize="default" />
